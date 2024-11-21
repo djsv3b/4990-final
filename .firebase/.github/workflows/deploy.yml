@@ -1,0 +1,41 @@
+name: Firebase Deploy Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20.x'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Install Firebase CLI
+      run: npm install -g firebase-tools
+
+    - name: Start Firestore emulator
+      run: |
+        firebase emulators:start --only firestore --project final-4990 &
+        sleep 5 # Wait for emulator to spin up
+
+    - name: Run tests
+      run: npm run test
+
+    - name: Build project
+      run: npm run build
+
+    - name: Deploy to Firebase
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      run: npx firebase deploy --only hosting
