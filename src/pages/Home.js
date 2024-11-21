@@ -15,7 +15,7 @@ function Home({ isAuth }) {
     };
 
     getPosts();
-  }, []); 
+  }, [postsCollectionRef]); 
 
   const deletePost = async (id) => {
     const postDoc = doc(db, "posts", id);
