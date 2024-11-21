@@ -37,6 +37,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@firebase/rules-unit-testing": "^4.0.1",
     "@firebase/testing": "^0.20.11",
     "@jest/globals": "^29.7.0",
